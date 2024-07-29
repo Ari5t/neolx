@@ -4,6 +4,7 @@ import { Model } from 'mongoose';
 import { InjectModel } from '@nestjs/mongoose';
 
 import { Announcement } from './schemas/announcement.schemas';
+import { CreateAnnouncementDto } from './dto/create-announcement.dto';
 
 @Injectable()
 export class AnnouncementsService {
@@ -14,5 +15,11 @@ export class AnnouncementsService {
 
   async findAll(): Promise<Announcement[]> {
     return this.announcementModel.find().exec();
+  }
+
+  async create(
+    сreateAnnouncementDto: CreateAnnouncementDto,
+  ): Promise<Announcement> {
+    return this.announcementModel.create(сreateAnnouncementDto);
   }
 }
