@@ -5,6 +5,7 @@ import { InjectModel } from '@nestjs/mongoose';
 
 import { Announcement, Status } from './schemas/announcement.schemas';
 import { CreateAnnouncementDto } from './dto/create-announcement.dto';
+import { UpdateAnnouncementDto } from './dto/update-announcement.dto';
 
 @Injectable()
 export class AnnouncementsService {
@@ -21,6 +22,15 @@ export class AnnouncementsService {
     createAnnouncementDto: CreateAnnouncementDto,
   ): Promise<Announcement> {
     return this.announcementModel.create(createAnnouncementDto);
+  }
+
+  async update(
+    id: string,
+    updateAnnouncementDto: UpdateAnnouncementDto,
+  ): Promise<Announcement> {
+    return this.announcementModel.findByIdAndUpdate(id, updateAnnouncementDto, {
+      new: true,
+    });
   }
 
   async delete(id: string): Promise<void> {
