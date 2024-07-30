@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Post } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, Post } from '@nestjs/common';
 
 import { AnnouncementsService } from './announcements.service';
 import { Announcement } from './schemas/announcement.schemas';
@@ -17,5 +17,10 @@ export class AnnouncementsController {
     @Body() createAnnouncementDto: CreateAnnouncementDto,
   ): Promise<Announcement> {
     return this.announcementsService.create(createAnnouncementDto);
+  }
+
+  @Delete(':id')
+  async delete(@Param('id') id: string): Promise<void> {
+    return this.announcementsService.delete(id);
   }
 }

@@ -3,7 +3,7 @@ import { Injectable } from '@nestjs/common';
 import { Model } from 'mongoose';
 import { InjectModel } from '@nestjs/mongoose';
 
-import { Announcement } from './schemas/announcement.schemas';
+import { Announcement, Status } from './schemas/announcement.schemas';
 import { CreateAnnouncementDto } from './dto/create-announcement.dto';
 
 @Injectable()
@@ -18,8 +18,14 @@ export class AnnouncementsService {
   }
 
   async create(
-    сreateAnnouncementDto: CreateAnnouncementDto,
+    createAnnouncementDto: CreateAnnouncementDto,
   ): Promise<Announcement> {
-    return this.announcementModel.create(сreateAnnouncementDto);
+    return this.announcementModel.create(createAnnouncementDto);
+  }
+
+  async delete(id: string): Promise<void> {
+    await this.announcementModel.findByIdAndUpdate(id, {
+      status: Status.CLOSE,
+    });
   }
 }
